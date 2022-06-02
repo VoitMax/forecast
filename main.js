@@ -55,6 +55,10 @@ async function loadWind(url) {
 
     layerControl.addOverlay(overlays.wind, `ECMWF Windvorhersage für ${forecastLabel}`)
 
+    L.velocityLayer({
+        data: jsondata
+    }).addTo(overlays.wind);
+
 
 
 };
