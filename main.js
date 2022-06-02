@@ -96,6 +96,8 @@ async function loadWeather(url) {
     let forecastLabel = formatDate(forecastDate);
     // console.log(forecastLabel);
 
+    
+
     let popup = `
             <strong>Wettervorhersage für ${forecastLabel}</strong>
             <ul>
@@ -109,6 +111,9 @@ async function loadWeather(url) {
             </ul>
     `;
 
+    // Wettericons
+    let symbol = jsondata.properties.timeseries[0].data.next_1_hours.summary.symbol_code;
+    popup += `<img src="icons/${symbol}.svg" alt ="${symbol}" style="width:32px">`;
     marker.setPopupContent(popup).openPopup();
 
 };
