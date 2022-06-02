@@ -28,18 +28,32 @@ L.control.scale({
     imperial: false
 }).addTo(map);
 
+// Datum formatieren
+let formatDate = function(date){
+    return date.toLocaleDateString("de-AT", {
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    }) + " Uhr"
+}
 // Windvorhersage
 async function loadWind(url) {
     const response = await fetch(url);
     const jsondata = await response.json();
-    console.log("Jsondaten", jsondata);
-    console.log("Zeitpunkt Erstellung", jsondata[0].header.refTime);
-    console.log("Zeitpunkt Voerhersage", jsondata[0].header.forecastTime);
+    // console.log("Jsondaten", jsondata);
+    // console.log("Zeitpunkt Erstellung", jsondata[0].header.refTime);
+    // console.log("Zeitpunkt Voerhersage", jsondata[0].header.forecastTime);
 
     let forecastDate = new Date(jsondata[0].header.refTime);
-    console.log("Echtes Datum Erstellung", forecastDate); 
+    // console.log("Echtes Datum Erstellung", forecastDate); 
     forecastDate.setHours(forecastDate.getHours() + jsondata[0].header.forecastTime)
-    console.log("Echtes Datum Vorhersage", forecastDate); 
+    // console.log("Echtes Datum Vorhersage", forecastDate); 
+
+    let forecastLabel = formatDate(forecastDate);
+    // console.log("Vorhersagezeitpunkt", forecastLabel);
+
+    layerControl.addOverlay(overlays.wind, `ECMWF Windvorhersage für ${forecastLabel}`)
 
 
 
